@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fruit Heroes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo"><img src="./img/logo.png" width="100px" height="100px"></a>
+            <button class="navbar-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <ul class="navbar-menu">
+                <li><a href="levels.html">Levels</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="javascript:void(0);" onclick="openSettings()">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="screen" id="login-screen">
+        <div class="auth-card">
+            <h1>WELCOME</h1>
+            <button class="auth-close" onclick="goHome()"><i class="fa-solid fa-x"></i></button>
+            <div id="login-area">
+                <input type="text" id="log-user" placeholder="Username">
+                <input type="password" id="log-pass" placeholder="Password">
+                <button class="btn" onclick="authAction('login')">Login</button>
+                <button class="btn" onclick="continueAsGuest()">Continue as Guest</button>
+                <p>Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthForms()"
+                        style="color:var(--secondary); font-weight:bold;">Sign Up</a></p>
+            </div>
+
+            <div id="register-area" style="display: none;">
+                <input type="text" id="reg-user" placeholder="New Username">
+                <input type="password" id="reg-pass" placeholder="New Password">
+                <button class="btn" onclick="authAction('register')">Create Account</button>
+                <p>Already have an account? <a href="javascript:void(0)" onclick="toggleAuthForms()"
+                        style="color:var(--secondary); font-weight:bold;">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guest Warning Modal -->
+    <div id="guest-modal" class="guest-modal">
+        <div class="guest-modal-content">
+            <h2>Reminder</h2>
+            <p>Progress can be lost.</p>
+            <div class="guest-modal-buttons">
+                <button class="btn guest-btns" id="guest-cancel">Cancel</button>
+                <button class="btn guest-btns" id="guest-continue">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settingsModal" class="settings-Modal">
+        <div class="modal-content">
+            <div class="settings-header">
+                <span>Settings</span>
+                <button class="close-btn" onclick="closeSettings()">
+                    <i class="fa-solid fa-x"></i>
+                </button>
+            </div>
+
+            <div class="player-card">
+                <img src="./img/avatar.png" class="avatar" alt="avatar">
+                <div class="player-info">
+                    <div class="name-row">
+                        <span class="player-name" id="playerName">Player_Name</span>
+                        <button class="edit-btn" onclick="enableEdit()">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="nameInput" class="name-input" />
+                    <div class="player-id">ID: 4545454</div>
+                </div>
+            </div>
+
+            <button class="logout-btn">Log out</button>
+
+            <div class="bottom-row">
+                <div class="follow-icons">Follow us:
+                    <div class="small-circle"><i class="fa-brands fa-facebook-f"></i></div>
+                    <div class="small-circle"><i class="fa-brands fa-instagram"></i></div>
+                </div>
+
+                <div class="icon-group">
+                    <div class="small-circle" onclick="toggleMusic()">
+                        <i class="fa-solid fa-music" id="music-icon"></i>
+                    </div>
+                    <div class="small-circle" onclick="toggleSound()">
+                        <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+                    </div>
+                    <div class="small-circle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i id="theme-icon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="version">V1.4v1.2</div>
+        </div>
+    </div>
+
+    <audio id="bg-music" src="./audio/song1.mp3" autoplay loop hidden></audio>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

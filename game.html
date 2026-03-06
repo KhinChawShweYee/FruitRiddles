@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Heroes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="game-bg">
+
+
+    <div id="game-screen" class="screen game-screen">
+
+        <div class="set-btn">
+            <a href="javascript:void(0);" onclick="openSettings()">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="game-life-container">
+            <div class="hud-item">
+                Target:<span id="goal-val">0</span>
+            </div>
+            <div class="hud-item">
+                <span id="moves-val">0</span> Moves Left
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid" id="grid">
+                <!-- <div class="cell"></div> -->
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button class="btn restart-btn" onclick="restartLevel()">
+                <i class="fa-solid fa-rotate"></i> Restart
+            </button>
+
+            <button class="btn quit-btn" onclick="exitLevel()">
+                <i class="fa-solid fa-right-from-bracket"></i> Quit
+            </button>
+        </div>
+
+        <div class="bg-floating-fruit">🍒</div>
+        <div class="bg-floating-fruit">🥝</div>
+        <div class="bg-floating-fruit">🥑</div>
+        <div class="bg-floating-fruit">🌶</div>
+        <div class="bg-floating-fruit">🍎</div>
+        <div class="bg-floating-fruit">🍇</div>
+        <div class="bg-floating-fruit">🍌</div>
+        <div class="bg-floating-fruit">🍊</div>
+        <div class="bg-floating-fruit">🍍</div>
+        <div class="bg-floating-fruit">🥭</div>
+        <div class="bg-floating-fruit">🍒</div>
+        <div class="bg-floating-fruit">🥝</div>
+        <div class="bg-floating-fruit">🥑</div>
+        <div class="bg-floating-fruit">🌶</div>
+        <div class="bg-floating-fruit">🍎</div>
+        <div class="bg-floating-fruit">🍇</div>
+        <div class="bg-floating-fruit">🍌</div>
+        <div class="bg-floating-fruit">🍊</div>
+        <div class="bg-floating-fruit">🍍</div>
+        <div class="bg-floating-fruit">🥭</div>
+
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="settingsModal" class="settings-Modal">
+        <div class="modal-content">
+            <div class="settings-header">
+                <span>Settings</span>
+                <button class="close-btn" onclick="closeSettings()">
+                    <i class="fa-solid fa-x"></i>
+                </button>
+            </div>
+
+            <div class="player-card">
+                <img src="./img/avatar.png" class="avatar" alt="avatar">
+                <div class="player-info">
+                    <div class="name-row">
+                        <span class="player-name" id="playerName">Player_Name</span>
+                        <button class="edit-btn" onclick="enableEdit()">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="nameInput" class="name-input" />
+                    <div class="player-id">ID: 4545454</div>
+                </div>
+            </div>
+
+            <button class="logout-btn">Log out</button>
+
+
+            <div class="bottom-row">
+                <div class="follow-icons">Follow us:
+                    <div class="small-circle"><i class="fa-brands fa-facebook-f"></i></div>
+                    <div class="small-circle"><i class="fa-brands fa-instagram"></i></div>
+                </div>
+
+                <div class="icon-group">
+                    <div class="small-circle" onclick="toggleMusic()">
+                        <i class="fa-solid fa-music" id="music-icon"></i>
+                    </div>
+                    <div class="small-circle" onclick="toggleSound()">
+                        <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+                    </div>
+                    <div class="small-circle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i id="theme-icon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="version">V1.4v1.2</div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
