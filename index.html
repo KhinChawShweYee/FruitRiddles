@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruit Heroes</title>
+    <title>Fruit Riddles</title>
+    <script src="js/theme.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -23,7 +24,7 @@
             </button>
 
             <ul class="navbar-menu">
-                <li><a href="levels.html">Levels</a></li>
+                <li><a href="javascript:0" onclick="goToPageBasedOnLogin('levels.html','login.html')">Levels</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="javascript:void(0);" onclick="openSettings()"><i class="fa fa-cog"
                             aria-hidden="true"></i></a></li>
@@ -83,11 +84,11 @@
                         </button>
                     </div>
                     <input type="text" id="nameInput" class="name-input" />
-                    <div class="player-id">ID: 4545454</div>
+                    <div class="player-id" id="playerExtra">ID: 4545454</div>
                 </div>
             </div>
 
-            <button class="logout-btn">Log out</button>
+            <button class="logout-btn" onclick="logout()">Log out</button>
 
             <div class="bottom-row">
                 <div class="follow-icons">Follow us:
@@ -115,7 +116,7 @@
             </div>
         </div>
 
-        <audio id="bg-music" src="./audio/song1.mp3" autoplay loop hidden></audio>
+        <audio id="bg-music" src="./audio/song1.mp3" loop hidden></audio>
         <script src="js/script.js"></script>
 </body>
 

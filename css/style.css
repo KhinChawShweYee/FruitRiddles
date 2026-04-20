@@ -14,6 +14,7 @@
     --box-background:  linear-gradient(145deg, #f09619, #8b9ae9);
     --font1: "TikTok Sans", sans-serif;
     --font2: "Playfair Display", serif;
+    --primary-text-color:#000;
 }
 
 body.evil {
@@ -23,7 +24,9 @@ body.evil {
     --bg-main: #0f0f0f;         
     --panel-color: rgba(25, 25, 25, 0.95);
     --navbar-text:#fff;
-    --text-color: #280808;    
+    --text-color: #280808;   
+    --primary-text-color:#fff;
+ 
 }
 
 body {
@@ -51,7 +54,11 @@ body {
 
 body.evil{
     background:  linear-gradient(180deg, rgba(222, 164, 212, 0.3) 0%, rgba(113, 167, 34, 0.5) 100%),
-        url("../img/home1.png");;
+        url("../img/home1.png");
+        
+background-attachment: fixed;
+    background-size: cover;
+        
 }
 
 .navbar {
@@ -430,7 +437,7 @@ body.evil .home-title{
     width: 100%;
     background: linear-gradient(to bottom, var(--secondary), var(--text-color));
     box-shadow: 0 6px 0px #be185d;
-    color: #000;
+    color: var(--primary-text-color);
     padding: 12px;
     border: none;
     border-radius: 50px;
@@ -451,14 +458,14 @@ body.evil .home-title{
     box-shadow: 0 3px 0px #be185d;
 }
 
-.btn-link {
+/* .btn-link {
     background: var(--secondary);
     border: none;
     color: #000;
     cursor: pointer;
     margin-top: 8px;
     font-weight: 700;
-}
+} */
 
 /* for guest user*/
 .guest-modal {
@@ -547,6 +554,7 @@ body.evil .home-title{
 .lvl-node {
     width: 50px;
     height: 50px;
+    color: var(--primary-text-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -559,6 +567,13 @@ body.evil .home-title{
 
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.lvl-node.unlocked {
+    background: #4caf50;
+    color: white;
+    border-color: #fff;
+    box-shadow: 0 5px 0px #2d6a35;
 }
 
 .lvl-node:hover {
@@ -576,20 +591,10 @@ body.evil .home-title{
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-/* .grid {
-    display: grid;
-    grid-template-columns: repeat(8, 60px);
-    grid-template-rows: repeat(8, 55px);
-    gap: 5px;
-    background: rgba(255, 255, 255, 0.4);
-     
-     background:  linear-gradient(180deg, var(--secondary), wheat);
-    padding: 10px;
-    border-radius: 15px;
-    border: 7px solid var(--primary);
-    margin: 20px auto;
-    width: fit-content;
-} */
+
+.hud-item{
+    color: var(--primary-text-color);
+}
 
 .grid{
     display:grid;
@@ -641,7 +646,6 @@ body.evil .home-title{
 
 /* setting button in gmae page  */
 .set-btn {
-
     width: 30px;
     height: 30px;
     border-radius: 2px;
@@ -655,7 +659,7 @@ body.evil .home-title{
 
 .set-btn a {
     font-size: 1.5rem;
-        color: #000;
+        color: var(--primary-text-color);
 }
 
 
@@ -711,7 +715,7 @@ body.evil .home-title{
     background: linear-gradient(180deg, var(--secondary), #ff4f95);
     padding: 10px 20px;
     border-radius: 25px;
-    color: #000;
+    color: var(--primary-text-color);
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -725,7 +729,7 @@ body.evil .home-title{
     border-radius: 50%;
     width: 34px;
     height: 34px;
-    color: #000;
+    color: var(--primary-text-color);
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -780,13 +784,13 @@ body.evil .home-title{
     width: 80%;
     border-radius: 50px;
     font-weight: bold;
-    color: #000;
+    color:var(--primary-text-color);
     font-size: 17px;
     cursor: pointer;
     margin: 15px auto;
     transition: all 0.2s ease;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    display: none;
+    display: block;
 }
 
 .logout-btn:hover {
@@ -813,6 +817,8 @@ body.evil .home-title{
 
 
 .follow-icons{
+
+    color: var(--primary-text-color);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -832,7 +838,7 @@ body.evil .home-title{
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #000;
+    color: var(--primary-text-color);
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -899,7 +905,7 @@ body.evil .home-title{
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    color: #000;
+    color: var(--primary-text-color);
     transition: all 0.3s ease;
 }
 
@@ -966,7 +972,7 @@ body.evil .home-title{
 .about-text p {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #333;
+    color: var(--primary-text-color);
 }
 
 
@@ -1121,4 +1127,86 @@ footer p {
         flex: 1 1 100%; 
         max-width: 100%;
     }
+}
+
+
+
+
+/* --- STORY SCREEN STYLING --- */
+#story-screen.active {
+    display: block;
+    padding: 0;
+}
+
+#story-screen {
+    background: #000;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.story-wrapper {
+    display: flex;
+    width: 400vw;
+    height: 100vh;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-panel {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 0;
+    padding: 40px;
+    box-sizing: border-box;
+    color: white;
+}
+
+.story-panel h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.story-panel p {
+    font-size: 1.5rem;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.story-emoji {
+    font-size: 6rem;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.story-controls {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 1100;
 }

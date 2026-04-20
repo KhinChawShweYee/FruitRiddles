@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Fruit Heroes</title>
+    <title>Fruit Riddles</title>
+    <script src="js/theme.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -60,7 +61,7 @@
             <p>Progress can be lost.</p>
             <div class="guest-modal-buttons">
                 <button class="btn guest-btns" id="guest-cancel">Cancel</button>
-                <button class="btn guest-btns" id="guest-continue">Continue</button>
+                <button class="btn guest-btns" id="guest-continue" onclick="playAsGuest()">Continue</button>
             </div>
         </div>
     </div>
@@ -85,7 +86,7 @@
                         </button>
                     </div>
                     <input type="text" id="nameInput" class="name-input" />
-                    <div class="player-id">ID: 4545454</div>
+                    <div class="player-id" id="playerExtra">ID: 4545454</div>
                 </div>
             </div>
 
@@ -116,7 +117,7 @@
         </div>
     </div>
 
-    <audio id="bg-music" src="./audio/song1.mp3" autoplay loop hidden></audio>
+    <audio id="bg-music" src="./audio/song1.mp3" loop hidden></audio>
     <script src="js/script.js"></script>
 </body>
 
