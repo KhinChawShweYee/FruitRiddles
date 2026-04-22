@@ -14,15 +14,6 @@
 
 <body class="game-bg">
 
-    <div id="story-screen" class="" style="z-index: 1001; background: rgba(0,0,0,0.85);">
-        <div class="story-wrapper" id="story-wrapper">
-        </div>
-        <div class="story-controls">
-            <button class="btn" onclick="nextStoryPanel()">Next</button>
-            <button class="btn" onclick="skipStory()">Skip</button>
-        </div>
-    </div>
-
     <div id="game-screen" class="screen game-screen">
 
         <div class="set-btn">
@@ -93,6 +84,9 @@
                 <div class="player-info">
                     <div class="name-row">
                         <span class="player-name" id="playerName">Player_Name</span>
+
+                        <input type="text" id="nameInput" class="name-input" style="display:none;" />
+                        
                         <button class="edit-btn" onclick="enableEdit()">
                             <i class="fa-solid fa-pen"></i>
                         </button>
@@ -130,6 +124,7 @@
         </div>
     </div>
 
+    <audio id="bg-music" src="./audio/song2.mp3" loop hidden></audio>
     <script src="js/script.js"></script>
 </body>
 

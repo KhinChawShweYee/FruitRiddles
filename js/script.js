@@ -27,6 +27,11 @@ function toggleAuthForms() {
     }
 }
 
+//function goHome
+function goHome() {
+    window.location.href = "index.html";
+}
+
 //logging out
 function logout() {
     localStorage.removeItem('fruitsaga_current_session');
@@ -44,10 +49,10 @@ function authAction(type) {
     const p = document.getElementById(type === 'register' ? 'reg-pass' : 'log-pass').value;
     if (!u || !p) return alert("Fill all fields");
     const key = `fruitsaga_${u}`;
-    
+
     if (type === 'register') {
         if (localStorage.getItem(key)) return alert("User exists");
-        localStorage.setItem(key, JSON.stringify({name:u, pass:p, unlocked:1, lives:5, lastLoss:null}));
+        localStorage.setItem(key, JSON.stringify({ name: u, pass: p, unlocked: 1, lives: 5, lastLoss: null }));
         alert("Account created!");
     } else {
         const data = JSON.parse(localStorage.getItem(key));
@@ -85,7 +90,7 @@ function openSettings() {
         // DEFAULT (not logged in)
         nameEl.textContent = "Player_Name";
         extraEl.textContent = "ID: 4545454";
-    } 
+    }
     else {
         // LOGGED-IN USER
         nameEl.textContent = user.name;
@@ -99,21 +104,85 @@ function closeSettings() {
     settingsModal.style.display = 'none';
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == settingsModal) {
         closeSettings();
     }
 }
 
 
+function enableEdit() {
+    const nameText = document.getElementById("playerName");
+    const input = document.getElementById("nameInput");
 
+    if (!nameText || !input) return;
+
+    // Show input, hide text
+    input.style.display = "block";
+    nameText.style.display = "none";
+
+    // Put current name inside input
+    input.value = nameText.textContent;
+
+    input.focus();
+
+    // Save when pressing Enter
+    input.onkeydown = function (e) {
+        if (e.key === "Enter") {
+            saveName();
+        }
+    };
+
+    // Save when clicking outside
+    input.onblur = function () {
+        saveName();
+    };
+}
+
+function saveName() {
+    const nameText = document.getElementById("playerName");
+    const input = document.getElementById("nameInput");
+
+    if (!nameText || !input || !user) return;
+
+    const newName = input.value.trim();
+    if (!newName) return;
+
+    const oldName = user.name;
+
+    // ===== UPDATE UI =====
+    nameText.textContent = newName;
+
+    // ===== UPDATE USER OBJECT =====
+    user.name = newName;
+
+    if (!user.isGuest) {
+        // 🔥 IMPORTANT: rename localStorage key
+
+        // remove old user
+        localStorage.removeItem(`fruitsaga_${oldName}`);
+
+        // save new user
+        localStorage.setItem(`fruitsaga_${newName}`, JSON.stringify(user));
+
+        // update current session
+        localStorage.setItem('fruitsaga_current_session', newName);
+    } else {
+        // guest case
+        localStorage.setItem("fruitsaga_guest", JSON.stringify(user));
+    }
+
+    // ===== SWITCH BACK UI =====
+    input.style.display = "none";
+    nameText.style.display = "inline";
+}
 //=================End of setting modal===============================
 
 
 //======================guest mode handling==========================
 function continueAsGuest() {
     const modal = document.getElementById('guest-modal');
-    modal.style.display = 'flex'; 
+    modal.style.display = 'flex';
 }
 
 const cancelBtn = document.getElementById('guest-cancel');
@@ -159,26 +228,47 @@ function playAsGuest() {
 //==============================game system==========================================================
 
 // initializing
-window.onload = () => {
+// window.onload = () => {
+//     loadAudioSettings();
+//     loadUserData();
+//     const path = window.location.pathname;
+//     if (path.includes('levels.html')) {
+//         renderLevelSelection();
+//         updateLifeUI();
+//         setInterval(updateLifeUI, 1000);
+//     }
+    
+//     if (path.includes('game.html')) {
+//         startGame();
+//     }
+// };
+
+
+window.addEventListener("DOMContentLoaded", () => {
     loadAudioSettings();
     loadUserData();
+
     const path = window.location.pathname;
+
     if (path.includes('levels.html')) {
         renderLevelSelection();
         updateLifeUI();
         setInterval(updateLifeUI, 1000);
     }
+
     if (path.includes('game.html')) {
-        setupStory();
+      
+            startGame();
+        };
     }
-};
+);
 
 //configuration
-const fruits = ['🍎','🍇','🍊','🥝','🫐','🍍','🍒'];
+const fruits = ['🍎', '🍇', '🍊', '🥝', '🫐', '🍍', '🍒'];
 const width = 8;
-const REFILL_TIME = 20 * 60 * 1000; 
+const REFILL_TIME = 20 * 60 * 1000;
 
-const levels = Array.from({length:10}, (_, i) => ({
+const levels = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     moves: 12 + (i * 2),
     target: { icon: fruits[i % fruits.length], count: 10 + (i * 3) },
@@ -193,13 +283,6 @@ const crushSound = new Audio("https://assets.mixkit.co/active_storage/sfx/270/27
 const winSound = new Audio("https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3");
 const loseSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
 
-
-function skipStory() {
-    const storyScreen = document.getElementById('story-screen');
-    if (storyScreen) storyScreen.style.display = 'none'; // hide story screen
-    startRealGameplay(); // start the game
-}
-
 //load user data
 function loadUserData() {
     const loggedInUser = localStorage.getItem('fruitsaga_current_session');
@@ -207,10 +290,10 @@ function loadUserData() {
     if (loggedInUser) {
         const savedData = localStorage.getItem(`fruitsaga_${loggedInUser}`);
         user = savedData ? JSON.parse(savedData) : null;
-    } 
+    }
     else if (localStorage.getItem("fruitsaga_guest")) {
         user = JSON.parse(localStorage.getItem("fruitsaga_guest"));
-    } 
+    }
     else {
         user = null;
     }
@@ -233,7 +316,7 @@ function updateLifeUI() {
     if (!user) return;
     const livesDisplay = document.getElementById('lives-val');
     const timerDisplay = document.getElementById('timer-text');
-    
+
     if (user.lives < 5 && user.lastLoss) {
         const diff = Date.now() - user.lastLoss;
         const refill = Math.floor(diff / REFILL_TIME);
@@ -243,7 +326,7 @@ function updateLifeUI() {
             saveUserData();
         }
     }
-    
+
     if (livesDisplay) livesDisplay.innerText = user.lives;
     if (timerDisplay) {
         if (user.lives < 5) {
@@ -260,7 +343,7 @@ function updateLifeUI() {
 
 //level selection
 function renderLevelSelection() {
-   
+
     if (!user) return;
 
     const nodes = document.querySelectorAll(".lvl-node");
@@ -275,9 +358,12 @@ function renderLevelSelection() {
 
             node.onclick = () => {
                 if (user.lives > 0) {
+
                     const levelData = levels.find(l => l.id === levelId);
                     localStorage.setItem("active_lvl_data", JSON.stringify(levelData));
-                    window.location.href = "game.html";
+
+                    showStoryBeforeGame();
+
                 } else {
                     alert("No lives left!");
                 }
@@ -293,6 +379,17 @@ function renderLevelSelection() {
     });
 }
 
+function showStoryBeforeGame() {
+    sessionStorage.removeItem("fruitsaga_game_state");
+    const storyScreen = document.getElementById("story-screen");
+    storyScreen.classList.add("active"); // show story
+    setupStory();
+}
+
+function skipStory() {
+    window.location.href = "game.html";
+}
+
 //story panels
 let currentStoryPanel = 0;
 function setupStory() {
@@ -300,7 +397,6 @@ function setupStory() {
     let data = JSON.parse(localStorage.getItem('active_lvl_data'));
 
     if (!data && user) {
-        // fallback: use the first unlocked level
         data = levels[user.unlocked - 1];
         localStorage.setItem('active_lvl_data', JSON.stringify(data));
     }
@@ -321,27 +417,79 @@ function setupStory() {
     currentStoryPanel = 0;
     wrapper.style.transform = `translateX(0)`;
 }
+
+
 function nextStoryPanel() {
     currentStoryPanel++;
     const wrapper = document.getElementById("story-wrapper");
+
     if (currentStoryPanel < wrapper.children.length) {
         wrapper.style.transform = `translateX(-${currentStoryPanel * 100}vw)`;
     } else {
-        document.getElementById('story-screen').style.display = 'none';
-        startRealGameplay();
+        window.location.href = "game.html";
     }
 }
 
+function saveGameState() {
+    const state = {
+        activeLvl,
+        movesRemaining,
+        targetGoal,
+        targetFruit,
+        grid: gridSquares.map(sq => sq.innerText)
+    };
+
+    sessionStorage.setItem("fruitsaga_game_state", JSON.stringify(state));
+}
+
+function loadGameState() {
+    const saved = sessionStorage.getItem("fruitsaga_game_state");
+    if (!saved) return null;
+    return JSON.parse(saved);
+}
+
 //gameplay
-function startRealGameplay() {
+// function startGame() {
+//     const savedState = loadGameState();
+//     const savedLvl = localStorage.getItem('active_lvl_data');
+//     if (!savedLvl) return navigateTo('levels.html');
+//     activeLvl = JSON.parse(savedLvl);
+//     movesRemaining = activeLvl.moves;
+//     targetGoal = activeLvl.target.count;
+//     targetFruit = activeLvl.target.icon;
+//     updateHUD();
+//     generateBoard();
+// }
+
+function startGame() {
+
+    const savedState = loadGameState();
+
     const savedLvl = localStorage.getItem('active_lvl_data');
     if (!savedLvl) return navigateTo('levels.html');
+
     activeLvl = JSON.parse(savedLvl);
-    movesRemaining = activeLvl.moves;
-    targetGoal = activeLvl.target.count;
-    targetFruit = activeLvl.target.icon;
-    updateHUD();
-    generateBoard();
+
+    // ✅ IF RESTORE EXISTING GAME
+    if (savedState) {
+
+        movesRemaining = savedState.movesRemaining;
+        targetGoal = savedState.targetGoal;
+        targetFruit = savedState.targetFruit;
+
+        updateHUD();
+        generateBoard(savedState.grid); // we modify generateBoard
+
+    } else {
+
+        // NEW GAME
+        movesRemaining = activeLvl.moves;
+        targetGoal = activeLvl.target.count;
+        targetFruit = activeLvl.target.icon;
+
+        updateHUD();
+        generateBoard();
+    }
 }
 
 function getLevelFruits() {
@@ -350,7 +498,7 @@ function getLevelFruits() {
     return arr;
 }
 
-function generateBoard() {
+function generateBoard(savedGrid = null) {
     const grid = document.getElementById('grid');
     if (!grid) return;
     grid.innerHTML = '';
@@ -361,7 +509,10 @@ function generateBoard() {
         sq.className = 'square';
         sq.setAttribute('draggable', true);
         sq.id = i;
-        sq.innerText = levelFruits[Math.floor(Math.random() * levelFruits.length)];
+        // sq.innerText = levelFruits[Math.floor(Math.random() * levelFruits.length)];
+        sq.innerText = savedGrid
+    ? savedGrid[i]
+    : levelFruits[Math.floor(Math.random() * levelFruits.length)];
         grid.appendChild(sq);
         gridSquares.push(sq);
     }
@@ -461,7 +612,7 @@ function attachDrag() {
 
 function handleSwap() {
 
-    const valid = [startId-1, startId+1, startId-width, startId+width];
+    const valid = [startId - 1, startId + 1, startId - width, startId + width];
 
     if (valid.includes(endId)) {
 
@@ -472,6 +623,7 @@ function handleSwap() {
         } else {
             movesRemaining--;
             updateHUD();
+            saveGameState();
         }
     }
 }
@@ -488,11 +640,11 @@ function detectMatches(fromPlayer) {
     for (let i = 0; i < 64; i++) {
         let f = gridSquares[i].innerText;
         if (!f) continue;
-        if (i % width < width - 2 && gridSquares[i+1].innerText === f && gridSquares[i+2].innerText === f) {
-            [i,i+1,i+2].forEach(x => clear.add(x)); matched = true;
+        if (i % width < width - 2 && gridSquares[i + 1].innerText === f && gridSquares[i + 2].innerText === f) {
+            [i, i + 1, i + 2].forEach(x => clear.add(x)); matched = true;
         }
-        if (i < 48 && gridSquares[i+width].innerText === f && gridSquares[i+width*2].innerText === f) {
-            [i,i+width,i+width*2].forEach(x => clear.add(x)); matched = true;
+        if (i < 48 && gridSquares[i + width].innerText === f && gridSquares[i + width * 2].innerText === f) {
+            [i, i + width, i + width * 2].forEach(x => clear.add(x)); matched = true;
         }
     }
     if (matched) {
@@ -510,8 +662,8 @@ function detectMatches(fromPlayer) {
 function applyGravity() {
     let moved = false;
     for (let i = 0; i < 56; i++) {
-        if (gridSquares[i+width].innerText === '' && gridSquares[i].innerText !== '') {
-            gridSquares[i+width].innerText = gridSquares[i].innerText;
+        if (gridSquares[i + width].innerText === '' && gridSquares[i].innerText !== '') {
+            gridSquares[i + width].innerText = gridSquares[i].innerText;
             gridSquares[i].innerText = '';
             moved = true;
         }
@@ -525,6 +677,8 @@ function applyGravity() {
     }
     if (moved) setTimeout(applyGravity, 100);
     else if (!detectMatches(true)) evaluate();
+
+    saveGameState();
 }
 
 function evaluate() {
@@ -551,7 +705,9 @@ function loseLifeAndExit(msg) {
 }
 
 function exitLevel() {
-    if (confirm("Quit and lose a life?")) loseLifeAndExit("Level Abandoned");
+    if (confirm("Quit and lose a life?")) {
+        loseLifeAndExit("Level Abandoned");
+    }
 }
 
 function updateHUD() {
@@ -647,8 +803,6 @@ function toggleSound() {
     }
 }
 
-
-
 function playSound(sound) {
     const soundSetting = localStorage.getItem("sound");
 
@@ -656,7 +810,7 @@ function playSound(sound) {
     if (soundSetting === "off") return;
 
     sound.currentTime = 0;
-    sound.play().catch(() => {});
+    sound.play().catch(() => { });
 }
 
 function loadAudioSettings() {
@@ -672,7 +826,7 @@ function loadAudioSettings() {
         if (musicSetting === "off") {
             music.pause();
         } else {
-            music.play().catch(() => {});
+            music.play().catch(() => { });
         }
     }
 
