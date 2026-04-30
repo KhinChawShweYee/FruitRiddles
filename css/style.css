@@ -195,80 +195,119 @@ body.evil .home-title {
 /* Floating Fruits */
 .bg-floating-fruit {
     position: absolute;
-    font-size: 3rem;
+    font-size: 1.5rem;
     user-select: none;
     z-index: -1;
     opacity: 0.8;
-    animation: float 10s infinite ease-in-out;
-}
+    animation-name: myani;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite; 
 
-.bg-floating-fruit:nth-child(1) {
-    top: 10%;
-    left: 10%;
+    bottom: -150px;
+} 
+
+bg-floating-fruit:nth-child(1) {
+    width: 75px;
+    height: 75px;
+    left: 7%;
+
     animation-delay: 0s;
-    font-size: 6rem;
+
 }
 
 .bg-floating-fruit:nth-child(2) {
-    top: 20%;
-    right: 15%;
-    animation-delay: 2s;
-    font-size: 7rem;
+    width: 65px;
+    height: 65px;
+    left: 12%;
+
+    animation-delay: 4s;
+
 }
 
 .bg-floating-fruit:nth-child(3) {
-    bottom: 15%;
-    left: 20%;
-    animation-delay: 4s;
-    font-size: 5rem;
+    width: 70px;
+    height: 70px;
+    left: 22%;
+
+    animation-delay: 7s;
+
 }
 
 .bg-floating-fruit:nth-child(4) {
-    bottom: 10%;
-    right: 10%;
-    animation-delay: 1s;
-    font-size: 8rem;
+    width: 60px;
+    height: 60px;
+    left: 42%;
+
+    animation-delay: 3.5s;
+
 }
 
-
 .bg-floating-fruit:nth-child(5) {
-    top: 25%;
-    left: 15%;
-    animation-delay: 0s;
-    font-size: 6rem;
+    width: 71px;
+    height: 71px;
+    left: 55%;
+
+    animation-delay: 6s;
+
 }
 
 .bg-floating-fruit:nth-child(6) {
-    top: 70%;
-    right: 35%;
-    animation-delay: 2s;
-    font-size: 7rem;
+    width: 55px;
+    height: 55px;
+    left: 67%;
+
+    animation-delay: 5s;
+
 }
 
 .bg-floating-fruit:nth-child(7) {
-    bottom: 55%;
-    left: 60%;
-    animation-delay: 4s;
-    font-size: 5rem;
+    width: 70px;
+    height: 70px;
+    left: 73%;
+
+    animation-delay: 6.2s;
+
 }
 
 .bg-floating-fruit:nth-child(8) {
-    bottom: 70%;
-    right: 90%;
-    animation-delay: 1s;
-    font-size: 8rem;
+    width: 65px;
+    height: 65px;
+    left: 87%;
+
+    animation-delay: 4.5s;
+
 }
 
-@keyframes float {
+.bg-floating-fruit:nth-child(9) {
+    width: 60px;
+    height: 60px;
+    left: 95%;
 
-    0%,
+    animation-delay: 7.9s;
+
+}
+
+.bg-floating-fruit:nth-child(10) {
+    width: 62px;
+    height: 62px;
+    left: 35%;
+
+    animation-delay: 2s;
+
+} 
+
+@keyframes myani {
+
+       0% {
+        bottom: -100px;
+    }
+
     100% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    50% {
-        transform: translateY(-30px) rotate(10deg);
-    }
+        bottom: 100%;
+        transform: rotate(180deg);
+        opacity: 0;
+    } 
 }
 
 /* --- SETTINGS MODAL --- */
@@ -410,7 +449,7 @@ body.evil .home-title {
 /* --- BOTTOM ROW (ICONS) --- */
 .bottom-row {
     display: flex;
-    flex-wrap: wrap; /* Allows icons to drop to next line on tiny screens */
+    flex-wrap: wrap; 
     justify-content: space-between;
     align-items: center;
     color: #000;
@@ -501,9 +540,8 @@ body.evil .home-title {
     transform: scale(1.1);
 }
 
-/* --- RESPONSIVENESS for index.html --- */
+/* --- RESPONSIVENESS forindex.html --- */
 
-/* For Tablets (Screens smaller than 992px) */
 @media (max-width: 992px) {
     .home-title {
         font-size: 3.5rem;
@@ -511,11 +549,10 @@ body.evil .home-title {
 
     .bg-floating-fruit {
         font-size: 4rem !important;
-        /* Scale down the decorative fruits */
     }
 }
 
-/* For Mobile Devices (Screens smaller than 600px) */
+
 @media (max-width: 600px) {
     .navbar-menu {
         gap: 15px;
@@ -590,7 +627,7 @@ body.evil .home-title {
     }
 }
 
-/* Landscape Mode Fix (For phones held sideways) */
+
 @media (max-height: 500px) {
     .home-screen {
         padding-top: 60px;
@@ -626,7 +663,7 @@ body.evil .home-title {
     }
 
     .bottom-row {
-        flex-direction: column; /* Stack bottom items on very small screens */
+        flex-direction: column; 
         text-align: center;
     }
     
@@ -656,7 +693,7 @@ body.evil .home-title {
 }
 
 .about-text {
-    flex: 1 1 400px; /* Text takes space but shrinks to 400px before wrapping */
+    flex: 1 1 400px; 
 }
 
 .about-block img {
@@ -691,11 +728,11 @@ body.evil .home-title {
     gap: 1.5rem;
     justify-content: center;
     width: 100%;
-    flex-wrap: wrap; /* Allow wrapping on mobile */
+    flex-wrap: wrap; 
 }
 
 .three-images img {
-    flex: 1 1 300px; /* Each image can grow, but breaks to next line if screen < 300px */
+    flex: 1 1 300px; 
     max-width: 350px;
 }
 
@@ -705,8 +742,8 @@ footer {
     padding: 2rem 0;
     color: #fff;
     text-align: center;
-    position: relative; /* Ensures it stays in the document flow */
-    margin-top: auto;   /* Useful if using flexbox on the body */
+    position: relative; 
+    margin-top: auto;   
     z-index: 5;
 }
 
@@ -726,11 +763,11 @@ footer {
     }
 
     .about-block {
-        flex-direction: column !important; /* Forces stack regardless of 'left-image' or 'right-image' classes */
+        flex-direction: column !important; 
         text-align: center;
     }
 
-    /* Reset orders so Image is ALWAYS on top on mobile */
+ 
     .left-image img, .right-image img {
         order: -1 !important;
     }
@@ -740,11 +777,11 @@ footer {
     }
 
     .about-block img {
-        max-width: 80%; /* Don't let it touch the edges on tablet */
+        max-width: 80%; 
     }
 }
 
-/* Mobile Devices (600px and below) */
+
 @media (max-width: 600px) {
     .about-text h2 {
         font-size: 1.8rem;
@@ -755,14 +792,14 @@ footer {
     }
 
     .about-block img {
-        max-width: 100%; /* Image can fill width on tiny screens */
+        max-width: 100%; 
     }
 
     .three-images {
         gap: 1rem;
     }
 
-    /* Make the 3-image row show 1 image per line on very small phones */
+
     .three-images img {
         flex: 1 1 100%;
     }
@@ -893,14 +930,9 @@ footer {
     .auth-card h1 {
         font-size: 1.5rem;
     }
-
-    /* Stack guest buttons vertically on very small screens if needed */
-    .guest-modal-buttons {
-        flex-direction: column;
-    }
 }
 
-/* Handle Landscape mode on phones */
+
 @media (max-height: 500px) {
     .screen {
         padding-top: 80px; /* Space for navbar */
@@ -926,7 +958,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 450px; /* Replaced fixed 400px */
+    max-width: 450px; 
     margin-bottom: 20px;
     background: var(--box-background);
     padding: 12px 25px;
@@ -943,7 +975,7 @@ footer {
     background: var(--box-background);
     padding: 30px;
     width: 100%;
-    max-width: 450px; /* Replaced fixed 400px */
+    max-width: 450px; 
     border-radius: 30px;
     text-align: center;
     position: relative;
@@ -955,7 +987,6 @@ footer {
 /* --- LEVEL GRID --- */
 .level-grid {
     display: grid;
-    /* Responsive Grid: It will try to fit 5 columns, but shrink if needed */
     grid-template-columns: repeat(5, 1fr); 
     gap: 15px;
     margin: 25px 0;
@@ -963,7 +994,7 @@ footer {
 }
 
 .lvl-node {
-    width: 55px; /* Slightly larger for better touch on mobile */
+    width: 55px; 
     height: 55px;
     color: var(--primary-text-color);
     display: flex;
@@ -994,10 +1025,10 @@ footer {
 
 /* --- responsive for levels.html --- */
 
-/* Small Phones (iPhone SE, etc.) */
+
 @media (max-width: 600px) {
     .level-grid {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns instead of 5 on tiny screens */
+        grid-template-columns: repeat(4, 1fr); 
         gap: 10px;
     }
     
@@ -1042,7 +1073,7 @@ footer {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 500px; /* Limits width on desktop */
+    max-width: 500px; 
     margin-bottom: 15px;
     background: var(--secondary);
     color: #000;
@@ -1055,7 +1086,6 @@ footer {
 /* --- THE GRID (The Core Fix) --- */
 .grid {
     display: grid;
-    /* Use 'vmin' so the grid scales based on the smallest screen dimension */
     grid-template-columns: repeat(8, 8.5vmin); 
     grid-template-rows: repeat(8, 8.5vmin);
     gap: 2px;
@@ -1063,24 +1093,22 @@ footer {
     padding: 10px;
     border-radius: 15px;
     border: 6px solid var(--secondary);
-    background-color: #ffdeab; /* Fallback color */
-    
-    /* Center the grid items */
+    background-color: #ffdeab; 
+
     justify-content: center;
     align-content: center;
     
-    /* Ensure it doesn't overflow */
     max-width: 95vw;
     margin: 0 auto;
 }
 
 .square {
-    width: 100%; /* Fill the grid cell */
+    width: 100%; 
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 6vmin; /* Emojis scale with the grid */
+    font-size: 6vmin; 
     cursor: grab;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
@@ -1128,7 +1156,7 @@ footer {
 /* For Landscape Mode on Phones */
 @media (max-height: 500px) {
     .game-screen {
-        flex-direction: row; /* Put HUD/Controls on the side if screen is short */
+        flex-direction: row; 
         gap: 20px;
         padding-top: 10px;
     }

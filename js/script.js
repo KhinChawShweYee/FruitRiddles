@@ -111,6 +111,7 @@ window.onclick = function (event) {
 }
 
 
+//function to edit player's name
 function enableEdit() {
     const nameText = document.getElementById("playerName");
     const input = document.getElementById("nameInput");
@@ -139,6 +140,7 @@ function enableEdit() {
     };
 }
 
+
 function saveName() {
     const nameText = document.getElementById("playerName");
     const input = document.getElementById("nameInput");
@@ -150,6 +152,15 @@ function saveName() {
 
     const oldName = user.name;
 
+    // ❗ CHECK IF NAME ALREADY EXISTS
+    const existingUser = localStorage.getItem(`fruitsaga_${newName}`);
+
+    if (existingUser && newName !== oldName) {
+        alert("Name already exists. Please choose another one.");
+        input.value = oldName;
+        return;
+    }
+
     // ===== UPDATE UI =====
     nameText.textContent = newName;
 
@@ -157,7 +168,6 @@ function saveName() {
     user.name = newName;
 
     if (!user.isGuest) {
-        // 🔥 IMPORTANT: rename localStorage key
 
         // remove old user
         localStorage.removeItem(`fruitsaga_${oldName}`);
@@ -167,8 +177,8 @@ function saveName() {
 
         // update current session
         localStorage.setItem('fruitsaga_current_session', newName);
+
     } else {
-        // guest case
         localStorage.setItem("fruitsaga_guest", JSON.stringify(user));
     }
 
@@ -227,23 +237,6 @@ function playAsGuest() {
 
 //==============================game system==========================================================
 
-// initializing
-// window.onload = () => {
-//     loadAudioSettings();
-//     loadUserData();
-//     const path = window.location.pathname;
-//     if (path.includes('levels.html')) {
-//         renderLevelSelection();
-//         updateLifeUI();
-//         setInterval(updateLifeUI, 1000);
-//     }
-    
-//     if (path.includes('game.html')) {
-//         startGame();
-//     }
-// };
-
-
 window.addEventListener("DOMContentLoaded", () => {
     loadAudioSettings();
     loadUserData();
@@ -257,10 +250,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     if (path.includes('game.html')) {
-      
-            startGame();
-        };
-    }
+
+        startGame();
+    };
+}
 );
 
 //configuration
@@ -279,9 +272,9 @@ let gridSquares = [];
 let activeLvl, movesRemaining, targetGoal, targetFruit;
 
 //sounds
-const crushSound = new Audio("https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3");
-const winSound = new Audio("https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3");
-const loseSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
+const crushSound = new Audio("../audio/crush.mp3");
+const winSound = new Audio("../audio/win.mp3");
+const loseSound = new Audio("../audio/lose.mp3");
 
 //load user data
 function loadUserData() {
@@ -430,6 +423,8 @@ function nextStoryPanel() {
     }
 }
 
+
+//to save game on refreshing or reloading
 function saveGameState() {
     const state = {
         activeLvl,
@@ -442,25 +437,15 @@ function saveGameState() {
     sessionStorage.setItem("fruitsaga_game_state", JSON.stringify(state));
 }
 
+//to continue game on refreshing or reloading
 function loadGameState() {
     const saved = sessionStorage.getItem("fruitsaga_game_state");
     if (!saved) return null;
     return JSON.parse(saved);
 }
 
-//gameplay
-// function startGame() {
-//     const savedState = loadGameState();
-//     const savedLvl = localStorage.getItem('active_lvl_data');
-//     if (!savedLvl) return navigateTo('levels.html');
-//     activeLvl = JSON.parse(savedLvl);
-//     movesRemaining = activeLvl.moves;
-//     targetGoal = activeLvl.target.count;
-//     targetFruit = activeLvl.target.icon;
-//     updateHUD();
-//     generateBoard();
-// }
 
+//game start
 function startGame() {
 
     const savedState = loadGameState();
@@ -470,7 +455,7 @@ function startGame() {
 
     activeLvl = JSON.parse(savedLvl);
 
-    // ✅ IF RESTORE EXISTING GAME
+    // game persistence if game already exists on refreshing
     if (savedState) {
 
         movesRemaining = savedState.movesRemaining;
@@ -478,7 +463,7 @@ function startGame() {
         targetFruit = savedState.targetFruit;
 
         updateHUD();
-        generateBoard(savedState.grid); // we modify generateBoard
+        generateBoard(savedState.grid);
 
     } else {
 
@@ -510,9 +495,10 @@ function generateBoard(savedGrid = null) {
         sq.setAttribute('draggable', true);
         sq.id = i;
         // sq.innerText = levelFruits[Math.floor(Math.random() * levelFruits.length)];
+        //game persistence on refreshing
         sq.innerText = savedGrid
-    ? savedGrid[i]
-    : levelFruits[Math.floor(Math.random() * levelFruits.length)];
+            ? savedGrid[i]
+            : levelFruits[Math.floor(Math.random() * levelFruits.length)];
         grid.appendChild(sq);
         gridSquares.push(sq);
     }
@@ -520,6 +506,7 @@ function generateBoard(savedGrid = null) {
     attachDrag();
 }
 
+//to make game is not played automatically at start (generating board)
 function removeStartingMatches() {
     let hasMatches = true;
     while (hasMatches) {
@@ -528,6 +515,7 @@ function removeStartingMatches() {
     }
 }
 
+//to fix everything immediately before player starts
 function instantGravity() {
     let moved = true;
     while (moved) {
@@ -610,6 +598,7 @@ function attachDrag() {
 
 }
 
+
 function handleSwap() {
 
     const valid = [startId - 1, startId + 1, startId - width, startId + width];
@@ -634,6 +623,7 @@ function swap(a, b) {
     gridSquares[b].innerText = t;
 }
 
+//detecting if the fruit matches
 function detectMatches(fromPlayer) {
     let matched = false;
     let clear = new Set();
@@ -659,6 +649,7 @@ function detectMatches(fromPlayer) {
     return matched;
 }
 
+//after a move
 function applyGravity() {
     let moved = false;
     for (let i = 0; i < 56; i++) {
@@ -681,11 +672,12 @@ function applyGravity() {
     saveGameState();
 }
 
+//win or loase
 function evaluate() {
     if (targetGoal <= 0) {
         playSound(winSound);
         setTimeout(() => {
-            alert("✨ LEVEL COMPLETE! ✨");
+            alert("LEVEL COMPLETE! Congrulations");
             if (activeLvl.id === user.unlocked && user.unlocked < 10) user.unlocked++;
             saveUserData();
             navigateTo('levels.html');
@@ -695,6 +687,7 @@ function evaluate() {
     }
 }
 
+//losing and saving state
 function loseLifeAndExit(msg) {
     playSound(loseSound);
     alert(msg);
@@ -710,6 +703,7 @@ function exitLevel() {
     }
 }
 
+//to update moves and goals
 function updateHUD() {
     const m = document.getElementById('moves-val');
     const g = document.getElementById('goal-val');
@@ -746,8 +740,8 @@ function renderProfile() {
     // Update music button text
     if (bgMusic) {
         musicBtn.textContent = bgMusic.paused
-            ? "Music: Off 🔇"
-            : "Music: On 🎵";
+            ? "Music: Off"
+            : "Music: On";
     }
 }
 
@@ -806,7 +800,6 @@ function toggleSound() {
 function playSound(sound) {
     const soundSetting = localStorage.getItem("sound");
 
-    // default = ON if nothing saved
     if (soundSetting === "off") return;
 
     sound.currentTime = 0;
@@ -821,7 +814,7 @@ function loadAudioSettings() {
     const musicSetting = localStorage.getItem("music");
     const soundSetting = localStorage.getItem("sound");
 
-    // 🎵 MUSIC
+    //background music
     if (music) {
         if (musicSetting === "off") {
             music.pause();
@@ -840,7 +833,7 @@ function loadAudioSettings() {
         }
     }
 
-    // 🔊 SOUND
+    //Sound icon for game win,lose,crush sound
     if (soundIcon) {
         soundIcon.classList.remove("fa-volume-high", "fa-volume-off");
 
