@@ -272,9 +272,9 @@ let gridSquares = [];
 let activeLvl, movesRemaining, targetGoal, targetFruit;
 
 //sounds
-const crushSound = new Audio("../audio/crush.mp3");
-const winSound = new Audio("../audio/win.mp3");
-const loseSound = new Audio("../audio/lose.mp3");
+const crushSound = new Audio("https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3");
+const winSound = new Audio("https://orangefreesounds.com/wp-content/uploads/2019/02/Winning-sound-effect-chimes.mp3");
+const loseSound = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3");
 
 //load user data
 function loadUserData() {
